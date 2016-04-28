@@ -11,7 +11,7 @@ Version: 	0.%{api}
 Release: 	2%{?gver}%{?dist}
 Summary:        A free h264/avc encoder - encoder binary
 License:        GPL-2.0+
-Group:          Productivity/Multimedia/Video/Editors and Convertors
+Group:          Applications/Multimedia
 Url:            http://developers.videolan.org/x264.html
 Source0: 	%{name}-0.%{api}-%{snapshot}.tar.xz
 Source1: 	x264-snapshot.sh
@@ -60,7 +60,7 @@ scratch.
 
 %package devel
 Summary:        Libraries and include file for the %{name} encoder
-Group:          Development/Libraries/C and C++
+Group:          Development/Libraries
 Requires: 	%{name}-libs = %{version}-%{release}
 Requires: 	pkgconfig
 Provides:       x264-devel = %{version}
