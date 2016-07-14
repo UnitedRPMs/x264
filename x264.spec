@@ -1,16 +1,16 @@
-# globals for x264-0.148-20160420-3b70645.tar.xz
+# globals for x264-0.148-20160707-3f5ed56.tar.xz
 %global api 148
-%global gitdate 20160420
-%global gitversion 3b70645
+%global gitdate 20160707
+%global gitversion 3f5ed56
 %global snapshot %{gitdate}-%{gitversion}
 %global gver .%{gitdate}git%{gitversion}
 %global branch master
 
 Name:           x264
 Version: 	0.%{api}
-Release: 	2%{?gver}%{?dist}
+Release: 	3%{?gver}%{?dist}
 Summary:        A free h264/avc encoder - encoder binary
-License:        GPL-2.0+
+License:        GPLv2
 Group:          Applications/Multimedia
 Url:            http://developers.videolan.org/x264.html
 Source0: 	%{name}-0.%{api}-%{snapshot}.tar.xz
@@ -131,16 +131,19 @@ make %{?_smp_mflags}
 
 %changelog
 
-* Wed Apr 20 2016 David Vásquez <davidjeremias82 AT gmail DOT com> x264-0.148-20160420-3b70645-2
+* Thu Jul 07 2016 David Vásquez <davidjeremias82 AT gmail DOT com> 0.148-3-20160707git3f5ed56
+- Updated to 0.148-20160707git3f5ed56
+
+* Wed Apr 20 2016 David Vásquez <davidjeremias82 AT gmail DOT com> 0.148-2-20160420git3b70645
 - Updated to x264-0.148-20160420-3b70645
 - Built x264-10bit
 
-* Sat Feb 20 2016 David Vasquez <davidjeremias82 at gmail dot com> - 0.148-20160220-a01e339-1
+* Sat Feb 20 2016 David Vasquez <davidjeremias82 at gmail dot com> - 0.148-1-20160220gita01e339
 - Updated to 0.148-20160220-a01e339
 
-* Mon Jul 13 2015 David Vasquez <davidjeremias82 at gmail dot com> - 0.146-20150713-121396c-1
+* Mon Jul 13 2015 David Vasquez <davidjeremias82 at gmail dot com> - 0.146-1-20150713git121396c
 - Upstream
-- Updated to 0.146-20150713-121396c
+- Updated to 0.146-20150713git121396c
 - Added git tag in x264-snapshot.sh
 
 * Tue Nov 19 2013 obs@botter.cc
