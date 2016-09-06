@@ -1,6 +1,6 @@
-# globals for x264-0.148-20160707-3f5ed56.tar.xz
+# globals for x264-0.148-20160906-3f5ed56.tar.xz
 %global api 148
-%global gitdate 20160707
+%global gitdate 20160906
 %global gitversion 3f5ed56
 %global snapshot %{gitdate}-%{gitversion}
 %global gver .%{gitdate}git%{gitversion}
@@ -8,7 +8,8 @@
 
 Name:           x264
 Version: 	0.%{api}
-Release: 	3%{?gver}%{?dist}
+Release: 	4%{?gver}%{?dist}
+Epoch: 		1
 Summary:        A free h264/avc encoder - encoder binary
 License:        GPLv2
 Group:          Applications/Multimedia
@@ -130,6 +131,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+
+* Tue Sep 06 2016 David Vásquez <davidjeremias82 AT gmail DOT com> 0.148-4-20160906git3f5ed56
+- Epoch tag
 
 * Thu Jul 07 2016 David Vásquez <davidjeremias82 AT gmail DOT com> 0.148-3-20160707git3f5ed56
 - Updated to 0.148-20160707git3f5ed56
