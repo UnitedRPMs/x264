@@ -8,8 +8,7 @@
 
 Name:           x264
 Version: 	0.%{api}
-Release: 	4%{?gver}%{?dist}
-Epoch: 		1
+Release: 	5%{?gver}%{?dist}
 Summary:        A free h264/avc encoder - encoder binary
 License:        GPLv2
 Group:          Applications/Multimedia
@@ -131,6 +130,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+
+* Wed Sep 07 2016 David Vásquez <davidjeremias82 AT gmail DOT com> 0.148-5-20160906git3f5ed56
+- Deleted epoch tag, we not need it.
 
 * Tue Sep 06 2016 David Vásquez <davidjeremias82 AT gmail DOT com> 0.148-4-20160906git3f5ed56
 - Epoch tag
