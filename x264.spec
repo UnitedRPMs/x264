@@ -1,6 +1,6 @@
-# globals for x264-0.148-20160906-3f5ed56.tar.xz
+# globals for x264-0.148-20160912-3f5ed56.tar.xz
 %global api 148
-%global gitdate 20160906
+%global gitdate 20160912
 %global gitversion 3f5ed56
 %global snapshot %{gitdate}-%{gitversion}
 %global gver .%{gitdate}git%{gitversion}
@@ -8,7 +8,8 @@
 
 Name:           x264
 Version: 	0.%{api}
-Release: 	5%{?gver}%{?dist}
+Release: 	6%{?gver}%{?dist}
+Epoch:		1
 Summary:        A free h264/avc encoder - encoder binary
 License:        GPLv2
 Group:          Applications/Multimedia
@@ -19,6 +20,9 @@ BuildRequires:  nasm
 BuildRequires:  pkgconfig
 BuildRequires:  yasm-devel >= 1.2.0
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+Provides:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+
 
 %description
 x264 is a free library for encoding next-generation H264/AVC video
@@ -53,6 +57,7 @@ for all other file types.
 %package libs
 Summary: Library for encoding H264/AVC video streams
 Group: Development/Libraries
+Provides:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description libs
 x264 is a free library for encoding H264/AVC video streams, written from
@@ -61,9 +66,10 @@ scratch.
 %package devel
 Summary:        Libraries and include file for the %{name} encoder
 Group:          Development/Libraries
-Requires: 	%{name}-libs = %{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires: 	pkgconfig
 Provides:       x264-devel = %{version}
+Provides:	x264-devel = %{epoch}:%{version}-%{release}
 Obsoletes:      x264-devel < %{version}
 
 %description devel
@@ -131,8 +137,8 @@ make %{?_smp_mflags}
 
 %changelog
 
-* Wed Sep 07 2016 David Vásquez <davidjeremias82 AT gmail DOT com> 0.148-5-20160906git3f5ed56
-- Deleted epoch tag, we not need it.
+* Mon Sep 12 2016 David Vásquez <davidjeremias82 AT gmail DOT com> 0.148-6-20160906git3f5ed56
+- Added epoch for sub-packages libs and devel
 
 * Tue Sep 06 2016 David Vásquez <davidjeremias82 AT gmail DOT com> 0.148-4-20160906git3f5ed56
 - Epoch tag
