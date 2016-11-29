@@ -1,20 +1,23 @@
-# globals for x264-0.148-20160912-3f5ed56.tar.xz
+# globals for x264-0.148-20161129-72d53ab.tar.xz
 %global api 148
-%global gitdate 20160912
-%global gitversion 3f5ed56
+%global gitdate 20161129
+%global gitversion 72d53ab
 %global snapshot %{gitdate}-%{gitversion}
 %global gver .%{gitdate}git%{gitversion}
 %global branch master
 
+%bcond_without 10bit-depth
+
 Name:           x264
 Version: 	0.%{api}
-Release: 	6%{?gver}%{?dist}
+Release: 	7%{?gver}%{?dist}
 Epoch:		1
 Summary:        A free h264/avc encoder - encoder binary
 License:        GPLv2
 Group:          Applications/Multimedia
 Url:            http://developers.videolan.org/x264.html
-Source0: 	%{name}-0.%{api}-%{snapshot}.tar.xz
+# Source: 	%{name}-0.%{api}-%{snapshot}.tar.xz
+Source0:	https://transfer.sh/81CE6/%{name}-0.%{api}-%{snapshot}.tar.xz
 Source1: 	x264-snapshot.sh
 BuildRequires:  nasm
 BuildRequires:  pkgconfig
@@ -57,6 +60,7 @@ for all other file types.
 %package libs
 Summary: Library for encoding H264/AVC video streams
 Group: Development/Libraries
+Provides:	%{name}-libs = %{version}-%{release}
 Provides:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description libs
@@ -68,7 +72,7 @@ Summary:        Libraries and include file for the %{name} encoder
 Group:          Development/Libraries
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires: 	pkgconfig
-Provides:       x264-devel = %{version}
+Provides:       x264-devel = %{version}-%{release}
 Provides:	x264-devel = %{epoch}:%{version}-%{release}
 Obsoletes:      x264-devel < %{version}
 
@@ -84,7 +88,6 @@ mplayer/mencoder with H264 encoding support.
 
 %prep
 %setup -n x264 
-
 
 %build
 
@@ -102,19 +105,24 @@ pushd %{_builddir}/%{name}-10bit
 
 %configure --enable-shared \
     --enable-pic \
+%if %{with 10bit-depth}
     --bit-depth=10
+%endif
 
 make %{?_smp_mflags}
 
 %install
 
   make -C %{_builddir}/%{name} DESTDIR=%{buildroot} install-cli
+%if %{with 10bit-depth}
   install -m 755 %{_builddir}/%{name}-10bit/x264 %{buildroot}/%{_bindir}/x264-10bit
+%endif
 
   install -dm 755 %{buildroot}/%{_libdir}
   make -C %{_builddir}/%{name} DESTDIR=%{buildroot} install-lib-shared %{?_smp_mflags}
-
+%if %{with 10bit-depth}
   make -C %{_builddir}/%{name}-10bit DESTDIR=%{buildroot} install-lib-shared %{?_smp_mflags}
+%endif
 
 %post -p /sbin/ldconfig
 
@@ -122,7 +130,9 @@ make %{?_smp_mflags}
 
 %files
 %{_bindir}/x264
+%if %{with 10bit-depth}
 %{_bindir}/x264-10bit
+%endif
 
 %files libs
 %{_libdir}/libx264.so.%{api}
@@ -136,6 +146,10 @@ make %{?_smp_mflags}
 
 
 %changelog
+
+* Tue Nov 29 2016 David Vásquez <davidjeremias82 AT gmail DOT com> 0.148-7-20161129git72d53ab
+- Legacy support
+- Updated to 0.148-20161129git72d53ab
 
 * Mon Sep 12 2016 David Vásquez <davidjeremias82 AT gmail DOT com> 0.148-6-20160906git3f5ed56
 - Added epoch for sub-packages libs and devel
