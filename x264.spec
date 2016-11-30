@@ -90,8 +90,9 @@ mplayer/mencoder with H264 encoding support.
 %setup -n x264 
 
 %build
-
+%if %{with 10bit-depth}
 cp -r %{_builddir}/%{name} %{_builddir}/%{name}-10bit
+%endif
 
   pushd %{_builddir}/%{name}
 
@@ -100,16 +101,16 @@ cp -r %{_builddir}/%{name} %{_builddir}/%{name}-10bit
 
 make %{?_smp_mflags}
 
-
+%if %{with 10bit-depth}
 pushd %{_builddir}/%{name}-10bit
 
 %configure --enable-shared \
     --enable-pic \
-%if %{with 10bit-depth}
     --bit-depth=10
-%endif
 
 make %{?_smp_mflags}
+%endif
+
 
 %install
 
