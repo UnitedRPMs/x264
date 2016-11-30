@@ -8,17 +8,17 @@
 
 %bcond_with 10bit-depth
 
-Name:           x264
+Name:     x264
 Version: 	0.%{api}
 Release: 	7%{?gver}%{?dist}
 Epoch:		1
-Summary:        A free h264/avc encoder - encoder binary
-License:        GPLv2
-Group:          Applications/Multimedia
-Url:            http://developers.videolan.org/x264.html
-# Source: 	%{name}-0.%{api}-%{snapshot}.tar.xz
+Summary:  A free h264/avc encoder - encoder binary
+License:  GPLv2
+Group:    Applications/Multimedia
+Url:      http://developers.videolan.org/x264.html
+# Source: %{name}-0.%{api}-%{snapshot}.tar.xz
 Source0:	https://transfer.sh/81CE6/%{name}-0.%{api}-%{snapshot}.tar.xz
-Source1: 	x264-snapshot.sh
+Source1: 	https://raw.githubusercontent.com/UnitedRPMs/x264/master/x264-snapshot.sh
 BuildRequires:  nasm
 BuildRequires:  pkgconfig
 BuildRequires:  yasm-devel >= 1.2.0
