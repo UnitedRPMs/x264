@@ -6,7 +6,7 @@
 %global gver .%{gitdate}git%{gitversion}
 %global branch master
 
-%bcond_without 10bit-depth
+%bcond_with 10bit-depth
 
 Name:           x264
 Version: 	0.%{api}
