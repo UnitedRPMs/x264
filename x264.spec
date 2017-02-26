@@ -1,7 +1,7 @@
-# globals for x264-0.148-20161129-72d53ab.tar.xz
+# globals for x264-0.148-20170226-90a61ec.tar.xz
 %global api 148
-%global gitdate 20161129
-%global gitversion 72d53ab
+%global gitdate 20170226
+%global gitversion 90a61ec
 %global snapshot %{gitdate}-%{gitversion}
 %global gver .%{gitdate}git%{gitversion}
 %global branch master
@@ -9,15 +9,15 @@
 %bcond_with 10bit-depth
 
 Name:     x264
-Version: 	0.%{api}
-Release: 	7%{?gver}%{?dist}
-Epoch:		1
+Version:  0.%{api}
+Release:  17%{?gver}%{?dist}
+Epoch:	  1
 Summary:  A free h264/avc encoder - encoder binary
 License:  GPLv2
 Group:    Applications/Multimedia
 Url:      http://developers.videolan.org/x264.html
 # Source: %{name}-0.%{api}-%{snapshot}.tar.xz
-Source0:	https://transfer.sh/81CE6/%{name}-0.%{api}-%{snapshot}.tar.xz
+Source0:	https://transfer.sh/5ViAo/x264-0.148-20170226-90a61ec.tar.xz
 Source1: 	https://raw.githubusercontent.com/UnitedRPMs/x264/master/x264-snapshot.sh
 BuildRequires:  nasm
 BuildRequires:  pkgconfig
@@ -147,6 +147,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+
+* Sun Feb 26 2017 David Vásquez <davidjeremias82 AT gmail DOT com> 148-17-20170226git90a61ec
+- Updated to 148-17-20170226git90a61ec
 
 * Tue Nov 29 2016 David Vásquez <davidjeremias82 AT gmail DOT com> 0.148-7-20161129git72d53ab
 - Legacy support
