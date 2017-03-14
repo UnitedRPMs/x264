@@ -17,7 +17,7 @@ License:  GPLv2
 Group:    Applications/Multimedia
 Url:      http://developers.videolan.org/x264.html
 # Source: %{name}-0.%{api}-%{snapshot}.tar.xz
-Source0:	https://transfer.sh/5ViAo/x264-0.148-20170226-90a61ec.tar.xz
+Source0:	https://transfer.sh/NKHsm/x264-0.148-20170226-90a61ec.tar.xz
 Source1: 	https://raw.githubusercontent.com/UnitedRPMs/x264/master/x264-snapshot.sh
 BuildRequires:  nasm
 BuildRequires:  pkgconfig
