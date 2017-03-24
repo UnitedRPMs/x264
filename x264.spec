@@ -1,23 +1,21 @@
 # globals for x264-0.148-20170226-90a61ec.tar.xz
 %global api 148
 %global gitdate 20170226
-%global gitversion 90a61ec
-%global snapshot %{gitdate}-%{gitversion}
-%global gver .%{gitdate}git%{gitversion}
-%global branch master
+%global commit0 90a61ec76424778c050524f682a33f115024be96
+%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+%global gver .%{gitdate}git%{shortcommit0}
 
 %bcond_with 10bit-depth
 
 Name:     x264
 Version:  0.%{api}
-Release:  17%{?gver}%{?dist}
+Release:  18%{?gver}%{?dist}
 Epoch:	  1
 Summary:  A free h264/avc encoder - encoder binary
 License:  GPLv2
 Group:    Applications/Multimedia
 Url:      http://developers.videolan.org/x264.html
-# Source: %{name}-0.%{api}-%{snapshot}.tar.xz
-Source0:	https://transfer.sh/NKHsm/x264-0.148-20170226-90a61ec.tar.xz
+Source0:	http://repo.or.cz/x264.git/snapshot/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 Source1: 	https://raw.githubusercontent.com/UnitedRPMs/x264/master/x264-snapshot.sh
 BuildRequires:  nasm
 BuildRequires:  pkgconfig
@@ -87,14 +85,14 @@ development with libx264. This library is needed to build
 mplayer/mencoder with H264 encoding support.
 
 %prep
-%setup -n x264 
+%autosetup -n x264-%{shortcommit0}
 
 %build
 %if %{with 10bit-depth}
-cp -r %{_builddir}/%{name} %{_builddir}/%{name}-10bit
+cp -r %{_builddir}/%{name}-%{shortcommit0} %{_builddir}/%{name}-10bit
 %endif
 
-  pushd %{_builddir}/%{name}
+  pushd %{_builddir}/%{name}-%{shortcommit0}
 
 %configure --enable-shared \
     --enable-pic
@@ -114,13 +112,13 @@ make %{?_smp_mflags}
 
 %install
 
-  make -C %{_builddir}/%{name} DESTDIR=%{buildroot} install-cli
+  make -C %{_builddir}/%{name}-%{shortcommit0} DESTDIR=%{buildroot} install-cli
 %if %{with 10bit-depth}
   install -m 755 %{_builddir}/%{name}-10bit/x264 %{buildroot}/%{_bindir}/x264-10bit
 %endif
 
   install -dm 755 %{buildroot}/%{_libdir}
-  make -C %{_builddir}/%{name} DESTDIR=%{buildroot} install-lib-shared %{?_smp_mflags}
+  make -C %{_builddir}/%{name}-%{shortcommit0} DESTDIR=%{buildroot} install-lib-shared %{?_smp_mflags}
 %if %{with 10bit-depth}
   make -C %{_builddir}/%{name}-10bit DESTDIR=%{buildroot} install-lib-shared %{?_smp_mflags}
 %endif
@@ -147,6 +145,10 @@ make %{?_smp_mflags}
 
 
 %changelog
+
+* Sun Feb 26 2017 David Vásquez <davidjeremias82 AT gmail DOT com> 148-18-20170226git90a61ec
+- Rebuilt for bad integrity
+- New changes in sources
 
 * Sun Feb 26 2017 David Vásquez <davidjeremias82 AT gmail DOT com> 148-17-20170226git90a61ec
 - Updated to 148-17-20170226git90a61ec
