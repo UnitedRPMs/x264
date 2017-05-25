@@ -1,22 +1,21 @@
-# globals for x264-0.148-20170226-90a61ec.tar.xz
 %global api 148
 %global gitdate 20170226
-%global commit0 90a61ec76424778c050524f682a33f115024be96
+%global commit0 d32d7bf1c6923a42cbd5ac2fd540ecbb009ba681
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global gver .%{gitdate}git%{shortcommit0}
+%global gver .git%{shortcommit0}
 
 %bcond_with 10bit-depth
 
 Name:     x264
 Version:  0.%{api}
-Release:  18%{?gver}%{?dist}
+Release:  20%{?gver}%{?dist}
 Epoch:	  1
 Summary:  A free h264/avc encoder - encoder binary
 License:  GPLv2
 Group:    Applications/Multimedia
 Url:      http://developers.videolan.org/x264.html
 Source0:	http://repo.or.cz/x264.git/snapshot/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
-Source1: 	https://raw.githubusercontent.com/UnitedRPMs/x264/master/x264-snapshot.sh
+Source1: 	x264-snapshot.sh
 BuildRequires:  nasm
 BuildRequires:  pkgconfig
 BuildRequires:  yasm-devel >= 1.2.0
@@ -88,23 +87,21 @@ mplayer/mencoder with H264 encoding support.
 %autosetup -n x264-%{shortcommit0}
 
 %build
-%if %{with 10bit-depth}
-cp -r %{_builddir}/%{name}-%{shortcommit0} %{_builddir}/%{name}-10bit
-%endif
 
-  pushd %{_builddir}/%{name}-%{shortcommit0}
+#  pushd %{_builddir}/%{name}-%{shortcommit0}
 
 %configure --enable-shared \
-    --enable-pic
+      --enable-pic 
 
 make %{?_smp_mflags}
 
 %if %{with 10bit-depth}
+cp -r %{_builddir}/%{name}-%{shortcommit0} %{_builddir}/%{name}-10bit
 pushd %{_builddir}/%{name}-10bit
 
 %configure --enable-shared \
-    --enable-pic \
-    --bit-depth=10
+      --enable-pic \
+      --bit-depth=10
 
 make %{?_smp_mflags}
 %endif
@@ -145,6 +142,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+
+* Wed May 24 2017 Unitedrpms Project <unitedrpms AT protonmail DOT com> 148-20.gitd32d7bf
+- Updated to 148-20.gitd32d7bf
 
 * Sun Feb 26 2017 David Vásquez <davidjeremias82 AT gmail DOT com> 148-18-20170226git90a61ec
 - Rebuilt for bad integrity
