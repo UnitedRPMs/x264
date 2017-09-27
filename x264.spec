@@ -1,4 +1,4 @@
-%global api 148
+%global api 152
 %global gitdate 20170926
 %global commit0 ba24899b0bf23345921da022f7a51e0c57dbe73d
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
@@ -8,7 +8,7 @@
 
 Name:     x264
 Version:  0.%{api}
-Release:  21%{?gver}%{?dist}
+Release:  2%{?gver}%{?dist}
 Epoch:	  1
 Summary:  A free h264/avc encoder - encoder binary
 License:  GPLv2
@@ -143,17 +143,17 @@ make %{?_smp_mflags}
 
 %changelog
 
-* Tue Sep 26 2017 Unitedrpms Project <unitedrpms AT protonmail DOT com> 148-21.gitba24899
-- Updated to 148-21.gitba24899
+* Tue Sep 26 2017 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.152-2.gitba24899
+- Updated to 152-2.gitba24899
 
-* Wed May 24 2017 Unitedrpms Project <unitedrpms AT protonmail DOT com> 148-20.gitd32d7bf
+* Wed May 24 2017 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.148-20.gitd32d7bf
 - Updated to 148-20.gitd32d7bf
 
-* Sun Feb 26 2017 David Vásquez <davidjeremias82 AT gmail DOT com> 148-18-20170226git90a61ec
+* Sun Feb 26 2017 David Vásquez <davidjeremias82 AT gmail DOT com> 0.148-18-20170226git90a61ec
 - Rebuilt for bad integrity
 - New changes in sources
 
-* Sun Feb 26 2017 David Vásquez <davidjeremias82 AT gmail DOT com> 148-17-20170226git90a61ec
+* Sun Feb 26 2017 David Vásquez <davidjeremias82 AT gmail DOT com> 0.148-17-20170226git90a61ec
 - Updated to 148-17-20170226git90a61ec
 
 * Tue Nov 29 2016 David Vásquez <davidjeremias82 AT gmail DOT com> 0.148-7-20161129git72d53ab
