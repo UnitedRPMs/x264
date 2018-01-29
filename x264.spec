@@ -1,6 +1,6 @@
 %global api 152
-%global gitdate 20170926
-%global commit0 ba24899b0bf23345921da022f7a51e0c57dbe73d
+%global gitdate 20180129
+%global commit0 7d0ff22e8c96de126be9d3de4952edd6d1b75a8c
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
@@ -8,7 +8,7 @@
 
 Name:     x264
 Version:  0.%{api}
-Release:  3%{?gver}%{?dist}
+Release:  4%{?gver}%{?dist}
 Epoch:    1
 Summary:  A free h264/avc encoder - encoder binary
 License:  GPLv2
@@ -142,6 +142,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+
+* Mon Jan 29 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.152-4.git7d0ff22  
+- Updated to current version
 
 * Wed Dec 06 2017 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.152-3.gitba24899  
 - Automatic Mass Rebuild
