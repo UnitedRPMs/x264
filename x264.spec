@@ -8,7 +8,7 @@
 
 Name:     x264
 Version:  0.%{api}
-Release:  4%{?gver}%{?dist}
+Release:  5%{?gver}%{?dist}
 Epoch:    1
 Summary:  A free h264/avc encoder - encoder binary
 License:  GPLv2
@@ -142,6 +142,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+
+* Sun May 27 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.152-5.gitba24899  
+- Automatic Mass Rebuild
 
 * Sat Feb 24 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.152-4.gitba24899  
 - Automatic Mass Rebuild
