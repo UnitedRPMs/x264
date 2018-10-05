@@ -1,21 +1,22 @@
-%global api 152
-%global gitdate 20170926
-%global commit0 ba24899b0bf23345921da022f7a51e0c57dbe73d
+%global api 155
+%global gitdate 20181004
+%global commit0 0a84d986e7020f8344f00752e3600b9769cc1e85
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
-%bcond_with 10bit-depth
+# 10bit read here https://gist.github.com/l4n9th4n9/4459997
+%bcond_without 10bit_depth
 
 Name:     x264
 Version:  0.%{api}
-Release:  5%{?gver}%{?dist}
+Release:  1%{?gver}%{?dist}
 Epoch:    1
 Summary:  A free h264/avc encoder - encoder binary
 License:  GPLv2
 Group:    Applications/Multimedia
-Url:      http://developers.videolan.org/x264.html
+Url:      https://www.videolan.org/developers/x264.html
+# git branches https://repo.or.cz/x264.git/refs
 Source0:	http://repo.or.cz/x264.git/snapshot/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
-Source1: 	x264-snapshot.sh
 BuildRequires:  nasm
 BuildRequires:  pkgconfig
 BuildRequires:  yasm-devel >= 1.2.0
@@ -23,7 +24,6 @@ BuildRequires:  gcc-c++
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Provides:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-
 
 %description
 x264 is a free library for encoding next-generation H264/AVC video
@@ -87,20 +87,26 @@ mplayer/mencoder with H264 encoding support.
 %prep
 %autosetup -n x264-%{shortcommit0}
 
+version=$( grep '#define X264_BUILD' x264.h | cut -d' ' -f3) 
+echo "You are using $version of x264"
+
 %build
 
-#  pushd %{_builddir}/%{name}-%{shortcommit0}
+%if  %{with 10bit_depth}
+cp -r %{_builddir}/%{name}-%{shortcommit0} %{_builddir}/%{name}-10bit
+%endif
 
 %configure --enable-shared \
       --enable-pic 
 
 make %{?_smp_mflags}
 
-%if %{with 10bit-depth}
-cp -r %{_builddir}/%{name}-%{shortcommit0} %{_builddir}/%{name}-10bit
+%if  %{with 10bit_depth}
 pushd %{_builddir}/%{name}-10bit
 
 %configure --enable-shared \
+      --libdir=%{_libdir}/x264-10bit \
+      --includedir=%{_includedir}/x264-10bit \
       --enable-pic \
       --bit-depth=10
 
@@ -111,13 +117,13 @@ make %{?_smp_mflags}
 %install
 
   make -C %{_builddir}/%{name}-%{shortcommit0} DESTDIR=%{buildroot} install-cli
-%if %{with 10bit-depth}
+%if  %{with 10bit_depth}
   install -m 755 %{_builddir}/%{name}-10bit/x264 %{buildroot}/%{_bindir}/x264-10bit
 %endif
 
   install -dm 755 %{buildroot}/%{_libdir}
   make -C %{_builddir}/%{name}-%{shortcommit0} DESTDIR=%{buildroot} install-lib-shared %{?_smp_mflags}
-%if %{with 10bit-depth}
+%if  %{with 10bit_depth}
   make -C %{_builddir}/%{name}-10bit DESTDIR=%{buildroot} install-lib-shared %{?_smp_mflags}
 %endif
 
@@ -127,12 +133,15 @@ make %{?_smp_mflags}
 
 %files
 %{_bindir}/x264
-%if %{with 10bit-depth}
+%if %{with 10bit_depth}
 %{_bindir}/x264-10bit
 %endif
 
 %files libs
 %{_libdir}/libx264.so.%{api}
+%if %{with 10bit_depth}
+%{_libdir}/x264-10bit/libx264.so.%{api}
+%endif
 
 %files devel
 %defattr(0644,root,root)
@@ -140,9 +149,18 @@ make %{?_smp_mflags}
 %{_includedir}/x264_config.h
 %{_libdir}/pkgconfig/x264.pc
 %{_libdir}/libx264.so
-
+%if %{with 10bit_depth}
+%{_includedir}/x264-10bit/x264.h
+%{_includedir}/x264-10bit/x264_config.h
+%{_libdir}/x264-10bit/libx264.so
+%{_libdir}/x264-10bit/pkgconfig/x264.pc
+%endif
 
 %changelog
+
+* Wed Oct 03 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.155-1.git0a84d98  
+- Updated to 0.155
+- Maintaining compatibility to 8 bits but enabling 10 bits
 
 * Sun May 27 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.152-5.gitba24899  
 - Automatic Mass Rebuild
