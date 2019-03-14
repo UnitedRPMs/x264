@@ -1,6 +1,6 @@
-%global api 155
-%global gitdate 20181004
-%global commit0 0a84d986e7020f8344f00752e3600b9769cc1e85
+%global api 157
+%global gitdate 20190313
+%global commit0 72db437770fd1ce3961f624dd57a8e75ff65ae0b
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
@@ -157,6 +157,9 @@ make %{?_smp_mflags}
 %endif
 
 %changelog
+
+* Wed Mar 13 2019 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.157-1.git72db437 
+- Updated to 0.157
 
 * Wed Oct 03 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.155-1.git0a84d98  
 - Updated to 0.155
