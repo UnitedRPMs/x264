@@ -3,6 +3,7 @@ BUILDROOT/*
 RPMS/*
 SPECS/*
 SRPMS/*
-x264*.tar.xz
-x264*.tar.gz
+*.tar.xz
+*.tar.gz
 .directory
+*.rpm

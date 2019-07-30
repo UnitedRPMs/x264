@@ -1,6 +1,6 @@
 %global api 157
 %global gitdate 20190313
-%global commit0 72db437770fd1ce3961f624dd57a8e75ff65ae0b
+%global commit0 72db437770fd1ce3961f624dd57a8e75ff65ae0b  
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
@@ -9,18 +9,19 @@
 
 Name:     x264
 Version:  0.%{api}
-Release:  1%{?gver}%{?dist}
+Release:  2%{?gver}%{?dist}
 Epoch:    1
 Summary:  A free h264/avc encoder - encoder binary
 License:  GPLv2
 Group:    Applications/Multimedia
 Url:      https://www.videolan.org/developers/x264.html
 # git branches https://repo.or.cz/x264.git/refs
-Source0:	http://repo.or.cz/x264.git/snapshot/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
+Source0:  https://code.videolan.org/videolan/x264/-/archive/%{commit0}/x264-%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 BuildRequires:  nasm
 BuildRequires:  pkgconfig
 BuildRequires:  yasm-devel >= 1.2.0
 BuildRequires:  gcc-c++
+BuildRequires:	bc
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Provides:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
@@ -85,15 +86,23 @@ development with libx264. This library is needed to build
 mplayer/mencoder with H264 encoding support.
 
 %prep
-%autosetup -n x264-%{shortcommit0}
+%autosetup -n x264-%{commit0}
 
-version=$( grep '#define X264_BUILD' x264.h | cut -d' ' -f3) 
-echo "You are using $version of x264"
+apiversion=$( grep '#define X264_BUILD' x264.h | cut -d' ' -f3 | sed 's/./0.&/1')   
+echo "You are using $apiversion of x264"
+
+_output=`echo "$apiversion != %{version}" | bc`
+if [[ $_output == "1" ]]; then
+   echo "api version is not equal to %{version}"
+exit 1
+else
+   echo "api version is equal to %{version}"
+fi
 
 %build
 
 %if  %{with 10bit_depth}
-cp -r %{_builddir}/%{name}-%{shortcommit0} %{_builddir}/%{name}-10bit
+cp -r %{_builddir}/%{name}-%{commit0} %{_builddir}/%{name}-10bit
 %endif
 
 %configure --enable-shared \
@@ -116,13 +125,13 @@ make %{?_smp_mflags}
 
 %install
 
-  make -C %{_builddir}/%{name}-%{shortcommit0} DESTDIR=%{buildroot} install-cli
+  make -C %{_builddir}/%{name}-%{commit0} DESTDIR=%{buildroot} install-cli
 %if  %{with 10bit_depth}
   install -m 755 %{_builddir}/%{name}-10bit/x264 %{buildroot}/%{_bindir}/x264-10bit
 %endif
 
   install -dm 755 %{buildroot}/%{_libdir}
-  make -C %{_builddir}/%{name}-%{shortcommit0} DESTDIR=%{buildroot} install-lib-shared %{?_smp_mflags}
+  make -C %{_builddir}/%{name}-%{commit0} DESTDIR=%{buildroot} install-lib-shared %{?_smp_mflags}
 %if  %{with 10bit_depth}
   make -C %{_builddir}/%{name}-10bit DESTDIR=%{buildroot} install-lib-shared %{?_smp_mflags}
 %endif
@@ -157,6 +166,9 @@ make %{?_smp_mflags}
 %endif
 
 %changelog
+
+* Tue Jul 30 2019 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.157-2.git72db437 
+- Rebuilt with the official source to gitlab
 
 * Wed Mar 13 2019 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.157-1.git72db437 
 - Updated to 0.157
