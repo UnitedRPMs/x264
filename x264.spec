@@ -1,6 +1,6 @@
-%global api 157
-%global gitdate 20190313
-%global commit0 72db437770fd1ce3961f624dd57a8e75ff65ae0b  
+%global api 159
+%global gitdate 20200701
+%global commit0 296494a4011f58f32adc54304a2654627558c59a  
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
@@ -9,13 +9,13 @@
 
 Name:     x264
 Version:  0.%{api}
-Release:  2%{?gver}%{?dist}
+Release:  7%{?gver}%{?dist}
 Epoch:    1
 Summary:  A free h264/avc encoder - encoder binary
 License:  GPLv2
 Group:    Applications/Multimedia
 Url:      https://www.videolan.org/developers/x264.html
-# git branches https://repo.or.cz/x264.git/refs
+# git branches https://code.videolan.org/videolan/x264.git
 Source0:  https://code.videolan.org/videolan/x264/-/archive/%{commit0}/x264-%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 BuildRequires:  nasm
 BuildRequires:  pkgconfig
@@ -166,6 +166,9 @@ make %{?_smp_mflags}
 %endif
 
 %changelog
+
+* Wed Jul 01 2020 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.159-7.git296494a 
+- Updated to 0.159-7.git296494a
 
 * Tue Jul 30 2019 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.157-2.git72db437 
 - Rebuilt with the official source to gitlab
