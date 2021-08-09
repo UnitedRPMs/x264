@@ -1,6 +1,5 @@
-%global api 161
-%global gitdate 20200701
-%global commit0 d198931a63049db1f2c92d96c34904c69fde8117  
+%global api 163
+%global commit0 5db6aa6cab1b146e07b60cc1736a01f21da01154  
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
@@ -166,6 +165,9 @@ make %{?_smp_mflags}
 %endif
 
 %changelog
+
+* Sun Aug 01 2021 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.163-7.git5db6aa6 
+- Updated to 0.163
 
 * Mon Nov 23 2020 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.161-7.gitd198931 
 - Updated to 0.161-7.gitd198931
